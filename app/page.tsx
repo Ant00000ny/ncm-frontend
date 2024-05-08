@@ -4,6 +4,7 @@ import {motion} from "framer-motion";
 import React, {useRef, useState} from "react";
 import {AuroraBackground} from "@/components/aurora-background";
 import {Button} from "@/components/moving-border";
+import Head from "next/head";
 
 export default function AuroraBackgroundDemo() {
     const fileInputRef = useRef(null);
@@ -66,39 +67,44 @@ export default function AuroraBackgroundDemo() {
     };
 
     return (
-        <AuroraBackground>
-            <motion.div
-                initial={{opacity: 0.0, y: 40}}
-                whileInView={{opacity: 1, y: 0}}
-                transition={{
-                    delay: 0.3,
-                    duration: 0.8,
-                    ease: "easeInOut",
-                }}
-                className="relative flex flex-col gap-4 items-center justify-center px-4"
-            >
-                <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
-                    网易云白嫖计划
-                </div>
-                <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
-                    开了 VIP 还拿不到音乐文件？
-                </div>
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    style={{display: 'none'}}
-                    accept=".ncm"
-                />
-                <Button
-                    onClick={handleButtonClick}
-                    borderRadius="1.75rem"
-                    className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
-                    disabled={isUploading}
+        <>
+            <Head>
+                <title>网易云白嫖计划</title>
+            </Head>
+            <AuroraBackground>
+                <motion.div
+                    initial={{opacity: 0.0, y: 40}}
+                    whileInView={{opacity: 1, y: 0}}
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "easeInOut",
+                    }}
+                    className="relative flex flex-col gap-4 items-center justify-center px-4"
                 >
-                    {buttonText}
-                </Button>
-            </motion.div>
-        </AuroraBackground>
+                    <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
+                        网易云白嫖计划
+                    </div>
+                    <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
+                        开了 VIP 还拿不到音乐文件？
+                    </div>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{display: 'none'}}
+                        accept=".ncm"
+                    />
+                    <Button
+                        onClick={handleButtonClick}
+                        borderRadius="1.75rem"
+                        className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+                        disabled={isUploading}
+                    >
+                        {buttonText}
+                    </Button>
+                </motion.div>
+            </AuroraBackground>
+        </>
     );
 }

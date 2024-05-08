@@ -20,7 +20,7 @@ export default function AuroraBackgroundDemo() {
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append("file", file, encodeURIComponent(file.name));
             setButtonText('上传中...');
             setIsUploading(true);
 

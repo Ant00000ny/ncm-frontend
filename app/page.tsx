@@ -16,7 +16,7 @@ export default function AuroraBackgroundDemo() {
         fileInputRef.current.click();
     };
 
-    const handleFileChange = async (event: { target: { files: any[]; }; }) => {
+    const handleFileChange = async (event: any) => {
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();
@@ -26,7 +26,7 @@ export default function AuroraBackgroundDemo() {
 
 
             try {
-                const response = await fetch("http://localhost:8080/api/ncm", {
+                const response = await fetch("https://ncm-backend-production.up.railway.app/api/ncm", {
                     method: 'POST',
                     body: formData,
                 });
@@ -35,10 +35,23 @@ export default function AuroraBackgroundDemo() {
                     throw new Error(`Error: ${response.statusText}`);
                 }
 
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = "default_filename";
+                if (contentDisposition) {
+                    const filenameRegex = /filename\*?=['"]?(?:UTF-8'')?([^"';]*)['"]?;?/i;
+                    const matches = filenameRegex.exec(contentDisposition);
+                    if (matches != null && matches[1]) {
+                        console.log(matches[1])
+                        filename = decodeURIComponent(matches[1]);
+                    }
+                }
+
+
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
+                a.download = filename
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -52,9 +65,6 @@ export default function AuroraBackgroundDemo() {
         }
     };
 
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
     return (
         <AuroraBackground>
             <motion.div

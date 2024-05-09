@@ -4,9 +4,9 @@ import {motion} from "framer-motion";
 import React, {useRef, useState} from "react";
 import {AuroraBackground} from "@/components/aurora-background";
 import {Button} from "@/components/moving-border";
-import Head from "next/head";
 
-export default function AuroraBackgroundDemo() {
+export default function Home() {
+
     const fileInputRef = useRef(null);
     const [buttonText, setButtonText] = useState('转换 .ncm 文件！');
     const [isUploading, setIsUploading] = useState(false);
@@ -69,9 +69,6 @@ export default function AuroraBackgroundDemo() {
 
     return (
         <>
-            <Head>
-                <title>网易云白嫖计划</title>
-            </Head>
             <AuroraBackground>
                 <motion.div
                     initial={{opacity: 0.0, y: 40}}
